@@ -44,6 +44,7 @@ public class CameraController : MonoBehaviour
     {
         if (minZoom > maxZoom)
         {
+            print("Keep min cam zoom below max cam zoom");
             Destroy(this);
         }
 
