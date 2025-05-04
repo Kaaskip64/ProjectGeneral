@@ -451,7 +451,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &188626432
 Transform:
   m_ObjectHideFlags: 0
@@ -474,7 +474,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 188626431}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &188626434
 Camera:
   m_ObjectHideFlags: 0
@@ -482,7 +482,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 188626431}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -1475,9 +1475,10 @@ MonoBehaviour:
   FollowplayerTopdown: {fileID: 484573423}
   FollowplayerBack: {fileID: 473033391}
   FirstPersonCamPos: {fileID: 1690858834}
-  FPScam: {fileID: 188626431}
+  FPScam: {fileID: 188626434}
   playerMesh: {fileID: 248806023}
   cameraController: {fileID: 758841923}
+  CamFPS: {fileID: 758841926}
   cameraSwitchButton: 99
   camInterval: 2
 --- !u!114 &758841926
@@ -1882,7 +1883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1690858833
 Transform:
   m_ObjectHideFlags: 0
@@ -1918,7 +1919,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 7
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}

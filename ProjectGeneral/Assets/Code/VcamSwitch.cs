@@ -10,13 +10,13 @@ public class VcamSwitch : MonoBehaviour
     public CinemachineVirtualCamera FollowplayerTopdown;
     public CinemachineVirtualCamera FollowplayerBack;
     public CinemachineVirtualCamera FirstPersonCamPos;
-    public GameObject FPScam;
+    public Camera FPScam;
     public MeshRenderer playerMesh;
 
     public CameraController cameraController;
+    public FPSmode CamFPS;
 
     private FirstPersonController FPS;
-    private FPSmode CamFPS;
 
     public KeyCode cameraSwitchButton;
 
@@ -27,7 +27,6 @@ public class VcamSwitch : MonoBehaviour
     private void Start()
     {
         FPS = FirstPersonController.instance;
-        CamFPS = FPSmode.instance;
     }
 
     private void Update()
@@ -55,51 +54,52 @@ public class VcamSwitch : MonoBehaviour
         KeyCode temp = cameraSwitchButton;
         cameraSwitchButton = KeyCode.End;
 
-        FreelookTopdown.gameObject.SetActive(false);
+        FreelookTopdown.enabled = false;
         yield return new WaitForSeconds(camInterval);
-        FollowplayerTopdown.gameObject.SetActive(false);
+        FollowplayerTopdown.enabled = false;
         yield return new WaitForSeconds(camInterval);
-        FirstPersonCamPos.gameObject.SetActive(true);
+        FollowplayerBack.enabled = false;
         yield return new WaitForSeconds(camInterval);
+
         cameraSwitchButton = temp;
 
         playerMesh.enabled = false;
-        FPScam.SetActive(true);
+        FPScam.enabled = true;
         FPS.SwitchFPSmode();
         CamFPS.FirstPersonCamOn = true;
         Cursor.lockState = CursorLockMode.Locked;
 
 
-        FirstPersonCamPos.gameObject.SetActive(false);
+        FirstPersonCamPos.enabled = false;
 
-        FollowplayerBack.gameObject.SetActive(false);
     }
 
     public IEnumerator FPSToTopdown()
     {
-        FollowplayerBack.gameObject.SetActive(true);
-        FirstPersonCamPos.gameObject.SetActive(false);
+        FPS.rb.velocity = new Vector3(0, 0, 0);
+        FollowplayerBack.enabled = false;
+        FPScam.enabled = false;
         FPS.SwitchFPSmode();
-        FPScam.SetActive(false);
         CamFPS.FirstPersonCamOn = false;
         playerMesh.enabled = true;
+        FirstPersonCamPos.enabled = true;
 
         Cursor.lockState = CursorLockMode.Confined;
-
-
-        FirstPersonCamPos.gameObject.SetActive(true);
 
 
         KeyCode temp = cameraSwitchButton;
         cameraSwitchButton = KeyCode.End;
 
         yield return new WaitForSeconds(camInterval);
-        FollowplayerTopdown.gameObject.SetActive(true);
-        FreelookTopdown.transform.position = FollowplayerTopdown.transform.position;
+        FollowplayerBack.enabled = true;
+
+        yield return new WaitForSeconds(camInterval);
+        FollowplayerTopdown.enabled = true;
         topdownOffset.m_Offset.z = 0;
         yield return new WaitForSeconds(camInterval);
         cameraController.SetActive();
         cameraSwitchButton = temp;
-        FreelookTopdown.gameObject.SetActive(true);
+        FreelookTopdown.transform.position = FollowplayerTopdown.transform.position;
+        FreelookTopdown.enabled = true;
     }
 }
