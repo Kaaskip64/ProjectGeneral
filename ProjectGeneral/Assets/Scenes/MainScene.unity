@@ -954,6 +954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionMarker: {fileID: 1549269094}
   isSelected: 0
+  isActive: 1
 --- !u!195 &248806031
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1560,10 +1561,12 @@ MonoBehaviour:
   FollowplayerTopdown: {fileID: 484573423}
   FollowplayerBack: {fileID: 473033391}
   FirstPersonCamPos: {fileID: 1690858834}
+  MainCam: {fileID: 758841920}
   FPScam: {fileID: 188626434}
   playerMesh: {fileID: 248806023}
   cameraController: {fileID: 758841923}
   CamFPS: {fileID: 758841926}
+  HeroAgent: {fileID: 248806031}
   cameraSwitchButton: 99
   camInterval: 2
 --- !u!114 &758841926
@@ -1938,6 +1941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSelection: []
+  allSelectables: []
 --- !u!4 &1212798974
 Transform:
   m_ObjectHideFlags: 0

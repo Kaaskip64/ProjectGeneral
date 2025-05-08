@@ -9,6 +9,10 @@ public class SelectUnit : MonoBehaviour, ISelectable
 
     [HideInInspector]
     public bool isSelected = false;
+
+    //[HideInInspector]
+    public bool isActive = true;
+
     private SelectedUnits selectedUnits;
     private NavMeshAgent agent;
 
@@ -16,12 +20,18 @@ public class SelectUnit : MonoBehaviour, ISelectable
     private void Start()
     {
         selectedUnits = SelectedUnits.instance;
+        selectedUnits.allSelectables.Add(this);
         agent = GetComponent<NavMeshAgent>();
 
     }
 
     void Update()
     {
+        if(!isActive)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit raycastHit;
@@ -50,11 +60,6 @@ public class SelectUnit : MonoBehaviour, ISelectable
         }
     }
 
-    private void OnMouseDown()
-    {
-        
-    }
-
     public void Select()
     {
         if(!selectedUnits.currentSelection.Contains(this))
@@ -64,5 +69,10 @@ public class SelectUnit : MonoBehaviour, ISelectable
             isSelected = true;
         }
 
+    }
+
+    public void SwitchOnOff()
+    {
+        isActive = !isActive;
     }
 }

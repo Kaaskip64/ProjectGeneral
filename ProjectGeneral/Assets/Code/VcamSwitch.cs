@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.AI;
 
 public class VcamSwitch : MonoBehaviour
 {
@@ -10,13 +11,17 @@ public class VcamSwitch : MonoBehaviour
     public CinemachineVirtualCamera FollowplayerTopdown;
     public CinemachineVirtualCamera FollowplayerBack;
     public CinemachineVirtualCamera FirstPersonCamPos;
+    public Camera MainCam;
     public Camera FPScam;
     public MeshRenderer playerMesh;
 
     public CameraController cameraController;
     public FPSmode CamFPS;
+    public NavMeshAgent HeroAgent;
+
 
     private FirstPersonController FPS;
+    private SelectedUnits selectedUnits;
 
     public KeyCode cameraSwitchButton;
 
@@ -27,6 +32,7 @@ public class VcamSwitch : MonoBehaviour
     private void Start()
     {
         FPS = FirstPersonController.instance;
+        selectedUnits = SelectedUnits.instance;
     }
 
     private void Update()
@@ -37,7 +43,7 @@ public class VcamSwitch : MonoBehaviour
             if(camSwitch)
             {
                 print("topdown to fps");
-                StartCoroutine(MoveToFPS());
+                StartCoroutine(TopdownToFPS());
             }
             if(!camSwitch)
             {
@@ -47,8 +53,15 @@ public class VcamSwitch : MonoBehaviour
         }
     }
 
-    public IEnumerator MoveToFPS()
+    public IEnumerator TopdownToFPS()
     {
+        foreach (SelectUnit selectable in selectedUnits.allSelectables)
+        {
+            selectable.isActive = false;
+        }
+
+        HeroAgent.enabled = false;
+
         cameraController.SetActive();
 
         KeyCode temp = cameraSwitchButton;
@@ -60,6 +73,8 @@ public class VcamSwitch : MonoBehaviour
         yield return new WaitForSeconds(camInterval);
         FollowplayerBack.enabled = false;
         yield return new WaitForSeconds(camInterval);
+
+        MainCam.enabled = false;
 
         cameraSwitchButton = temp;
 
@@ -76,6 +91,16 @@ public class VcamSwitch : MonoBehaviour
 
     public IEnumerator FPSToTopdown()
     {
+        foreach (SelectUnit selectable in selectedUnits.allSelectables)
+        {
+            selectable.isActive = true;
+        }
+
+        HeroAgent.enabled = true;
+
+        MainCam.enabled = true;
+
+
         FPS.rb.velocity = new Vector3(0, 0, 0);
         FollowplayerBack.enabled = false;
         FPScam.enabled = false;
